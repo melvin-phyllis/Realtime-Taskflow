@@ -29,7 +29,7 @@ const ListTasks = () => {
     }, [GetTask, usersinfo?.id]);
 
     const openModal = (task: formTasktType) => {
-        const dialog = document.getElementById("my_modal_1") as| HTMLDialogElement| null;
+        const dialog = document.getElementById("my_modal_1") as HTMLDialogElement | null;
         setSelectedTask(task);
         dialog?.showModal();
     };

@@ -1,7 +1,7 @@
 import EditTask from "@/controllers/EditTaskServer"
 import { useTodoStore } from "@/Store/TodoList"
 import { formTasktType } from "@/types"
-import { ChangeEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 
 const UpdateTask = ({ item }: { item: formTasktType }) => {
     const { Update,usersinfo } = useTodoStore()
@@ -32,6 +32,16 @@ const UpdateTask = ({ item }: { item: formTasktType }) => {
 
     }
 
+    const closeModal = () => {
+        const dialog = document.getElementById("my_modal_1") as HTMLDialogElement | null
+        dialog?.close()
+    }
+
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        await EditTask(e, form, item, Update, usersinfo)
+        closeModal()
+    }
+
     return (
 
         <dialog
@@ -49,7 +59,7 @@ const UpdateTask = ({ item }: { item: formTasktType }) => {
                 </div>
 
                 <div className="px-6 py-6">
-                    < form action="" className="flex flex-col gap-6" onSubmit={(e) => EditTask(e, form, item, Update,usersinfo)} method="dialog">
+                    <form action="" className="flex flex-col gap-6" onSubmit={handleSubmit}>
                         <div className="grid gap-6 sm:grid-cols-2">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-slate-200">Title</label>     
@@ -91,7 +101,7 @@ const UpdateTask = ({ item }: { item: formTasktType }) => {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-200">Status</label>
                             <select
-                                value={form?.status}
+                                value={form.status ?? "waiting"}
                                 className="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/40"
                                 name="status"
                                 onChange={(e) => HandleChange(e)}
@@ -102,22 +112,23 @@ const UpdateTask = ({ item }: { item: formTasktType }) => {
                             </select>
                         </div>
 
+                        <div className="flex flex-col items-center justify-end gap-3 border-t border-slate-800 pt-6 sm:flex-row">
+                            <button
+                                type="submit"
+                                className="w-full rounded-xl bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300 sm:w-auto"
+                            >
+                                Update
+                            </button>
 
-                    </form >
-                    <div className="flex flex-col items-center justify-end gap-3 border-t border-slate-800 pt-6 sm:flex-row">
-                        <button
-                            type="submit"
-                            className="w-full rounded-xl bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-emerald-300 sm:w-auto"
-                        >
-                            Update
-                        </button>
-
-                        <form method="dialog" className="w-full sm:w-auto">
-                            <button className="w-full rounded-xl border border-slate-700 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-emerald-400 hover:text-emerald-300">
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className="w-full rounded-xl border border-slate-700 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-emerald-400 hover:text-emerald-300 sm:w-auto"
+                            >
                                 Close
                             </button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </dialog>

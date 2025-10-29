@@ -11,15 +11,18 @@ export const GET = async (req: Request) => {
         }
 
 
-        const data = await axios.get(`${process.env.DATABASE_URL}/tasks.json`)
+        const { data } = await axios.get(
+            `${process.env.DATABASE_URL}/tasks/${userId}.json`
+        )
 
+        if (!data) {
+            return NextResponse.json({ message: "ok", List: [] })
+        }
 
-        const List = Object.keys(data.data).map(key => ({
-            id: key, ...data.data[key]
+        const List = Object.entries(data).map(([key, value]) => ({
+            id: key,
+            ...(typeof value === "object" && value !== null ? value : {}),
         }))
-
-
-
 
         return NextResponse.json({ message: "ok", List })
 

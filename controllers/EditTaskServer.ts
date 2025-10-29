@@ -10,8 +10,7 @@ const EditTask = async (e: FormEvent<HTMLFormElement>, form: formTasktType, item
         console.log(req)
         Update(id!, form)
     } catch (error) {
-
-        console.log('ERREUR')
+        console.log(error)
 
     }
 

@@ -126,6 +126,7 @@ export default function InscriptionPage() {
                     name="password"
                     type="password"
                     autoComplete="new-password"
+                    suppressHydrationWarning
 
                     onChange={handleChange}
                     placeholder="Minimum 6 caracteres"
@@ -142,6 +143,7 @@ export default function InscriptionPage() {
                     name="confirmPassword"
                     type="password"
                     autoComplete="new-password"
+                    suppressHydrationWarning
 
                     onChange={handleChange}
                     placeholder="Repetez le mot de passe"
